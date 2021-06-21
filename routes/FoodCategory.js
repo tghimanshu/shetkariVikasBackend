@@ -1,5 +1,15 @@
 const router = require("express").Router();
-const { FoodCategory } = require("../models/schemas");
+const { FoodCategory, Food } = require("../models/schemas");
+
+/* GEt products */
+router.get("/foods/:catId", async (req, res) => {
+  try {
+    const foods = await Food.find({ category: req.params.catId });
+    return res.send(foods);
+  } catch (error) {
+    return console.log(error);
+  }
+});
 
 /* Get Single Posts */
 router.get("/:id", async (req, res) => {
