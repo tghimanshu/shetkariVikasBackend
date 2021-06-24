@@ -3,19 +3,23 @@ const { User, hash_password, userValidate } = require("../models/schemas");
 const bcrypt = require("bcrypt");
 
 /* Login as Admin */
-router.get("/login", async (req, res) => {
-  const admin = await User.findOne({
-    email: req.body.email,
-  });
-  if (!admin) return res.status(400).send("Invalid Username Or Password!");
+router.post("/login", async (req, res) => {
+  try {
+    const admin = await User.findOne({
+      email: req.body.email,
+    });
+    if (!admin) return res.status(400).send("Invalid Username Or Password!");
 
-  const pass = await bcrypt.compare(req.body.password, admin.password);
+    const pass = await bcrypt.compare(req.body.password, admin.password);
 
-  if (!pass) return res.status(400).send("Invalid Username Or Password!");
+    if (!pass) return res.status(400).send("Invalid Username Or Password!");
 
-  const token = admin.generateAuthToken();
+    const token = admin.generateAuthToken();
 
-  res.header("x-auth-token", token).send(token);
+    res.header("x-auth-token", token).send({ token: token });
+  } catch (err) {
+    return res.status(500).send(err);
+  }
 });
 
 /* Get Single Posts */
@@ -43,12 +47,14 @@ router.post("/", async (req, res) => {
   try {
     // const validate = studentValidate(req.body);
     // if (validate.error) return res.status(400).send(validate.error.message);
+    console.log(req, req.body.password);
 
     req.body.password = await hash_password(req.body.password);
 
     const admin = new User(req.body);
     const result = await admin.save();
-    res.send(result);
+    const token = admin.generateAuthToken();
+    res.send({ token: token });
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);

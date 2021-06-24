@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const config = require("config");
 const bcrypt = require("bcrypt");
@@ -93,10 +94,6 @@ const ClothCategorySchema = new mongoose.Schema({
 });
 
 const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
@@ -105,17 +102,33 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  contact: {
-    type: Number,
-    required: true,
-  },
   password: {
     type: String,
     required: true,
   },
-  address: {
+  phone: {
     type: String,
     required: true,
+  },
+  street: {
+    type: String,
+    default: "",
+  },
+  apartment: {
+    type: String,
+    default: "",
+  },
+  zip: {
+    type: String,
+    default: "",
+  },
+  city: {
+    type: String,
+    default: "",
+  },
+  country: {
+    type: String,
+    default: "",
   },
 });
 
@@ -142,6 +155,66 @@ const AdminSchema = new mongoose.Schema({
   },
 });
 
+const orderSchema = mongoose.Schema({
+  orderItems: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "OrderItem",
+      required: true,
+    },
+  ],
+  shippingAddress1: {
+    type: String,
+    required: true,
+  },
+  shippingAddress2: {
+    type: String,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  zip: {
+    type: String,
+    required: true,
+  },
+  country: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    required: true,
+    default: "Pending",
+  },
+  totalPrice: {
+    type: Number,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  dateOrdered: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const orderItemSchema = mongoose.Schema({
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  product: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Food",
+  },
+});
+
 // * GENERATING TOKENS
 
 AdminSchema.methods.generateAuthToken = function () {
@@ -154,7 +227,7 @@ AdminSchema.methods.generateAuthToken = function () {
 
 UserSchema.methods.generateAuthToken = function () {
   const token = jwt.sign(
-    { _id: this._id, role: "user" },
+    { _id: this._id, role: "user", user: this },
     config.get("jwt_token")
   );
   return token;
@@ -174,6 +247,10 @@ const User = mongoose.model("User", UserSchema);
 
 const Admin = mongoose.model("Admin", AdminSchema);
 
+const Order = mongoose.model("Order", orderSchema);
+
+const OrderItem = mongoose.model("OrderItem", orderItemSchema);
+
 // * VALIDATION
 
 const adminValidate = (data) => {
@@ -188,12 +265,10 @@ const adminValidate = (data) => {
 
 const userValidate = (data) => {
   return Joi.object({
-    username: Joi.string().required(),
     name: Joi.string().required(),
     email: Joi.string().email().required(),
-    contact: Joi.number().min(00000000).max(999999999999).required(),
+    phone: Joi.number().min(00000000).max(999999999999).required(),
     password: Joi.string().required(),
-    address: Joi.string(),
   });
 };
 
@@ -215,6 +290,8 @@ module.exports = {
   ClothCategory,
   Admin,
   User,
+  Order,
+  OrderItem,
   adminValidate,
   userValidate,
 };
