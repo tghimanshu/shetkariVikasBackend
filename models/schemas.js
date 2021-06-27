@@ -5,11 +5,14 @@ const config = require("config");
 const bcrypt = require("bcrypt");
 
 mongoose
-  .connect("mongodb://localhost/shetkariVikas", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  })
+  .connect(
+    "mongodb+srv://admin:<password>@shetkarigramvikas.mhsy3.mongodb.net/test",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    }
+  )
   .then(() => console.log("connected to mongodb"))
   .catch((err) => console.log(err.message));
 
