@@ -7,7 +7,7 @@ const foodcategories = require("./routes/FoodCategory");
 const clothcategories = require("./routes/ClothCategory");
 const user = require("./routes/User");
 const admin = require("./routes/Admin");
-const order = require("./route/Order");
+const order = require("./routes/Order");
 const cors = require("cors");
 const { Food } = require("./models/schemas");
 

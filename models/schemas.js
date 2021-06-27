@@ -158,27 +158,21 @@ const AdminSchema = new mongoose.Schema({
 const orderSchema = mongoose.Schema({
   orderItems: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "OrderItem",
-      required: true,
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Food",
+      },
+      quantity: Number,
     },
   ],
-  shippingAddress1: {
+  address1: {
     type: String,
     required: true,
   },
-  shippingAddress2: {
+  address2: {
     type: String,
-  },
-  city: {
-    type: String,
-    required: true,
   },
   zip: {
-    type: String,
-    required: true,
-  },
-  country: {
     type: String,
     required: true,
   },
