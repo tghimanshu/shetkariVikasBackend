@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 
 mongoose
   .connect(
-    "mongodb+srv://admin:<password>@shetkarigramvikas.mhsy3.mongodb.net/test",
+    "mongodb+srv://admin:admin@shetkarigramvikas.mhsy3.mongodb.net/test",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
