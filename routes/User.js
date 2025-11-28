@@ -2,7 +2,20 @@ const router = require("express").Router();
 const { User, hash_password, userValidate } = require("../models/schemas");
 const bcrypt = require("bcrypt");
 
-/* Login as Admin */
+/**
+ * Login as User.
+ * Verifies email and password, and returns a JWT token.
+ *
+ * @name POST /user/login
+ * @function
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.email - The user's email.
+ * @param {string} req.body.password - The user's password.
+ * @param {Object} res - The response object.
+ * @returns {Object} Returns object containing the JWT token.
+ * @returns {string} Returns error message if authentication fails.
+ */
 router.post("/login", async (req, res) => {
   try {
     const admin = await User.findOne({
@@ -22,7 +35,18 @@ router.post("/login", async (req, res) => {
   }
 });
 
-/* Get Single Posts */
+/**
+ * Get a single User by ID.
+ *
+ * @name GET /user/:id
+ * @function
+ * @param {Object} req - The request object.
+ * @param {Object} req.params - The route parameters.
+ * @param {string} req.params.id - The ID of the user to retrieve.
+ * @param {Object} res - The response object.
+ * @returns {Object} Returns the user object if found.
+ * @returns {Object} Returns the error object if an error occurs.
+ */
 router.get("/:id", async (req, res) => {
   try {
     const admin = await User.findById(req.params.id);
@@ -32,7 +56,16 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-/* Get All Post */
+/**
+ * Get all Users.
+ *
+ * @name GET /user/
+ * @function
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Array<Object>} Returns an array of all user objects.
+ * @returns {Object} Returns the error object if an error occurs.
+ */
 router.get("/", async (req, res) => {
   try {
     const admins = await User.find();
@@ -42,7 +75,19 @@ router.get("/", async (req, res) => {
   }
 });
 
-/* Add New Post */
+/**
+ * Register a new User.
+ * Hashes the password, saves the user, and generates a token.
+ *
+ * @name POST /user/
+ * @function
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The user registration data.
+ * @param {string} req.body.password - The password to hash and save.
+ * @param {Object} res - The response object.
+ * @returns {Object} Returns object containing the JWT token.
+ * @returns {Object} Returns the error object if an error occurs.
+ */
 router.post("/", async (req, res) => {
   try {
     // const validate = studentValidate(req.body);
