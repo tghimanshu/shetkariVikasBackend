@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "config": "^3.3.6",
+    "config": "^5.0.1",
     "cors": "^2.8.6",
     "dotenv": "^10.0.0",
     "express": "^5.2.1",
