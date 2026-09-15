@@ -592,10 +592,10 @@ node-gyp-build@^4.8.4:
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.8.4.tgz#8a70ee85464ae52327772a90d66c6077a900cfc8"
   integrity sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==
 
-nodemailer@^10.0.3:
-  version "10.0.3"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-10.0.3.tgz#f1fa53fa12f6effe1c2c3c89ef7fb3410e3b6027"
-  integrity sha512-h5c8ypcMoOIh44bIcVROvTDbjRdOJX8AXTkxMht2C92HlSjkG+/8kjoqmNPypfjQaVNaUHWyZ3tqs5I3K91F3g==
+nodemailer@^10.0.8:
+  version "10.0.8"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-10.0.8.tgz#0cc4f701259fff4b63d3da8d77add02f1d9a6957"
+  integrity sha512-uCZ0AtFDI46sHwJ6mhwNuIoA/KiTC0ZCzX7g01941+H9VMIXEiZjtgjQkzoBRTeQba0cIrKfwk31q99PfcIMRw==
 
 object-assign@^4:
   version "4.1.1"
